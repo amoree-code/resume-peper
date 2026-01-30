@@ -17,7 +17,7 @@ Front-end Developer | Full Stack Experience
 
 == Summary
 
-Front-End Developer with 2 years of experience building responsive, user-centric web applications. Skilled in creating modern, interactive interfaces using React, Next.js, and TypeScript. Experienced in developing large-scale dashboards and management systems handling millions of records. Strong focus on clean code, performance optimization, and delivering seamless user experiences.
+Front-End Developer with 2 years of experience building responsive, user-centric web applications. Skilled in creating modern, interactive interfaces. Experienced in developing large-scale dashboards and management systems handling millions of records. Strong focus on clean code, performance optimization, and delivering seamless user experiences.
 
 == Experience
 
