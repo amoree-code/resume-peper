@@ -5,12 +5,14 @@
 = Ameer Abdulkareem
 Front-end Developer | Full Stack Experience
 
-📞 #link("tel:+9647777665783")[+964 777 766 5783] |
-📞 #link("tel:+9647726819007")[+964 772 681 9007] |
-✉ #link("mailto:amoree.allami@gmail.com")[amoree.allami\@gmail.com] \
-🔗 #link("https://github.com/amoree-cod")[GitHub] |
-🔗 #link("https://www.linkedin.com/in/amer-abdulkareem/")[LinkedIn] |
-🌐 #link("https://cv-amoree.vercel.app")[Portfolio]
+#let icon(path, size: 1em) = box(baseline: 0.1em, image(path, height: size))
+
+#icon("icons/phone.svg") #link("tel:+9647777665783")[+964 777 766 5783] |
+#icon("icons/phone.svg") #link("tel:+9647726819007")[+964 772 681 9007] |
+#icon("icons/gmail.svg") #link("mailto:amoree.allami@gmail.com")[amoree.allami\@gmail.com] \
+#icon("icons/github.svg") #link("https://github.com/amoree-code")[GitHub] |
+#icon("icons/linkedin.svg") #link("https://www.linkedin.com/in/amer-abdulkareem/")[LinkedIn] |
+#icon("icons/globe.svg") #link("https://cv-amoree.vercel.app")[Portfolio]
 ]
 
 == Summary
@@ -25,7 +27,7 @@ Front-End Developer with 2 years of experience building responsive, user-centric
   inset: (x: 8pt, y: 6pt),
 
   table.cell(stroke: (right: 1pt))[_Sep 2025 -_ \ _Present_],
-  [*Front-end Developer* \ *StarSphere*
+  [* StarSphere* \ *Front-end Developer*
     - Build and maintain responsive web applications using React and Next.js
     - Collaborate with designers to implement pixel-perfect UI components
     - Improve application load time by 40% through code optimization and lazy loading
@@ -33,7 +35,7 @@ Front-End Developer with 2 years of experience building responsive, user-centric
   ],
 
   table.cell(stroke: (right: 1pt))[_Jul 2025 -_ \ _Aug 2025_],
-  [*Front-end Developer* \ *Lightring Technology*
+  [* Lightring Technology* \ *Front-end Developer*
     - Developed reusable React components for internal dashboard systems
     - Integrated RESTful APIs and managed application state with Redux Toolkit
     - Collaborated with backend team to ensure seamless data flow
@@ -41,7 +43,7 @@ Front-End Developer with 2 years of experience building responsive, user-centric
   ],
 
   table.cell(stroke: (right: 1pt))[_Feb 2025 -_ \ _Jul 2025_],
-  [*Front-end Developer* \ *The Golden Castle*
+  [* The Golden Castle* \ *Front-end Developer*
     - Created interactive user interfaces using React and Tailwind CSS
     - Implemented responsive designs that increased mobile user engagement by 25%
     - Conducted code reviews and mentored junior developers
@@ -89,9 +91,7 @@ Front-End Developer with 2 years of experience building responsive, user-centric
 - Built integrated control panel for electronic voting and reporting
 - Developed vote management system with real-time results tracking
 - Implemented secure role-based permissions for administrators
-- Created comprehensive reporting and analytics features
-
-== Landing Pages
+- Created comprehensive reporting and analytics features  
 
 *Riyada* — #link("https://riyada.iq")[riyada.iq]
 - Built landing page for Entrepreneurship Directorate platform
