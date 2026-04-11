@@ -63,6 +63,14 @@ Front-End Developer with 2 years of experience building responsive, user-centric
 
 == Projects
 
+*Technical Support System* - Real-time Customer Communication Management System
+- Built and sold as a SaaS real-time support chat application integrated into multiple production platforms
+- Integrated with many client support applications as an embedded live chat solution
+- Implemented real-time live chat for instant, bidirectional communication between users and agents
+- Developed multi-role system (Admin, Supervisor, Agent, Client) with fine-grained permissions and access control
+- Managed full ticket and conversation lifecycle with role-based visibility and escalation workflows
+
+
 *Dashboard Entrepreneurship* — Ministry of Higher Education
 - Built control panel managing 1.5 million+ student and project records
 - Implemented role-based permissions and access control system
