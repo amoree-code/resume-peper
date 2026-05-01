@@ -5,55 +5,82 @@ on:
       - main
 
 jobs:
-  convert_and_upload:
+  build_and_sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Install Typst
+      # 1. Setup Typst to compile your .typ file
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
 
-      # 2. Convert main.typ to resume.pdf
+      # 2. Compile main.typ into resume.pdf
       - name: Generate PDF
         run: typst compile main.typ resume.pdf
 
-      # 3. Upload to Google Drive using Python
+      # 3. Upload to Google Drive using Node.js
       - name: Upload to Drive
         env:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
         run: |
-          pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
-          python - <<EOF
-          import os
-          import json
-          from google.oauth2 import service_account
-          from googleapiclient.discovery import build
-          from googleapiclient.http import MediaFileUpload
+          npm install googleapis
+          node - <<EOF
+          const { google } = require('googleapis');
+          const fs = require('fs');
 
-          # Load credentials from GitHub Secrets
-          info = json.loads(os.environ['GDRIVE_CREDENTIALS'])
-          creds = service_account.Credentials.from_service_account_info(info)
-          drive_service = build('drive', 'v3', credentials=creds)
+          async function syncResume() {
+            const credentials = JSON.parse(process.env.GDRIVE_CREDENTIALS);
+            const folderId = process.env.FOLDER_ID;
+            const fileName = 'resume.pdf';
 
-          FILENAME = 'resume.pdf'
-          FOLDER_ID = os.environ['FOLDER_ID']
+            const auth = new google.auth.GoogleAuth({
+              credentials,
+              scopes: ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive'],
+            });
 
-          media = MediaFileUpload(FILENAME, mimetype='application/pdf')
+            const drive = google.drive({ version: 'v3', auth });
 
-          # Search for existing file to update it instead of creating duplicates
-          query = f"name = '{FILENAME}' and '{FOLDER_ID}' in parents and trashed = false"
-          results = drive_service.files().list(q=query, fields='files(id)').execute()
-          files = results.get('files', [])
+            // 1. Search for existing file in the folder to prevent duplicates
+            const res = await drive.files.list({
+              q: "name = '" + fileName + "' and '" + folderId + "' in parents and trashed = false",
+              fields: 'files(id)',
+            });
 
-          if files:
-              file_id = files[0]['id']
-              drive_service.files().update(fileId=file_id, media_body=media).execute()
-              print(f"✅ Successfully updated {FILENAME} (ID: {file_id})")
-          else:
-              file_metadata = {'name': FILENAME, 'parents': [FOLDER_ID]}
-              file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-              print(f"✅ Successfully created {FILENAME} (ID: {file.get('id')})")
+            const fileMetadata = {
+              name: fileName,
+              parents: [folderId],
+            };
+            
+            const media = {
+              mimeType: 'application/pdf',
+              body: fs.createReadStream(fileName),
+            };
+
+            const existingFiles = res.data.files;
+            
+            if (existingFiles && existingFiles.length > 0) {
+              // 2. If it exists, update it
+              const fileId = existingFiles[0].id;
+              await drive.files.update({
+                fileId: fileId,
+                media: media,
+              });
+              console.log('✅ Successfully updated ' + fileName + ' (ID: ' + fileId + ')');
+            } else {
+              // 3. If it doesn't exist, create it
+              const newFile = await drive.files.create({
+                resource: fileMetadata,
+                media: media,
+                fields: 'id',
+              });
+              console.log('✅ Successfully created ' + fileName + ' (ID: ' + newFile.data.id + ')');
+            }
+          }
+
+          syncResume().catch(err => {
+            console.error('❌ Error Detail:', err.message);
+            process.exit(1);
+          });
           EOF
