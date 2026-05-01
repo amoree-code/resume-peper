@@ -1,8 +1,8 @@
-name: Sync PDF to Google Drive
+name: Sync Resume to Google Drive
 on:
   push:
     branches:
-      - main # Runs every time you push to main
+      - main
 
 jobs:
   convert_and_upload:
@@ -11,16 +11,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Pandoc
-        run: sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended
+      # 1. Install Typst
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v3
 
-      - name: Convert Markdown to PDF
-        run: pandoc README.md -o document.pdf
+      # 2. Convert main.typ to resume.pdf
+      - name: Generate PDF
+        run: typst compile main.typ resume.pdf
 
-      - name: Upload to Google Drive
-        uses: Jambo-Dev/google-drive-upload-action@v1.1.0
-        with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          filename: document.pdf
-          folderId: ${{ secrets.FOLDER_ID }}
-          overwrite: 'true'
+      # 3. Upload to Google Drive using Python
+      - name: Upload to Drive
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          FOLDER_ID: ${{ secrets.FOLDER_ID }}
+        run: |
+          pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+          python - <<EOF
+          import os
+          import json
+          from google.oauth2 import service_account
+          from googleapiclient.discovery import build
+          from googleapiclient.http import MediaFileUpload
+
+          # Load credentials from GitHub Secrets
+          info = json.loads(os.environ['GDRIVE_CREDENTIALS'])
+          creds = service_account.Credentials.from_service_account_info(info)
+          drive_service = build('drive', 'v3', credentials=creds)
+
+          FILENAME = 'resume.pdf'
+          FOLDER_ID = os.environ['FOLDER_ID']
+
+          media = MediaFileUpload(FILENAME, mimetype='application/pdf')
+
+          # Search for existing file to update it instead of creating duplicates
+          query = f"name = '{FILENAME}' and '{FOLDER_ID}' in parents and trashed = false"
+          results = drive_service.files().list(q=query, fields='files(id)').execute()
+          files = results.get('files', [])
+
+          if files:
+              file_id = files[0]['id']
+              drive_service.files().update(fileId=file_id, media_body=media).execute()
+              print(f"✅ Successfully updated {FILENAME} (ID: {file_id})")
+          else:
+              file_metadata = {'name': FILENAME, 'parents': [FOLDER_ID]}
+              file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+              print(f"✅ Successfully created {FILENAME} (ID: {file.get('id')})")
+          EOF
