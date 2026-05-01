@@ -32,27 +32,28 @@ jobs:
 
           async function syncResume() {
             const credentials = JSON.parse(process.env.GDRIVE_CREDENTIALS);
-            const folderId = process.env.FOLDER_ID;
+            const folderId = process.env.FOLDER_ID ? process.env.FOLDER_ID.trim() : '';
             const fileName = 'resume.pdf';
+
+            if (!folderId) {
+              throw new Error('FOLDER_ID secret is empty or missing');
+            }
 
             const auth = new google.auth.GoogleAuth({
               credentials,
-              scopes: ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive'],
+              scopes: ['https://www.googleapis.com/auth/drive'],
             });
 
             const drive = google.drive({ version: 'v3', auth });
 
-            // 1. Search for existing file in the folder to prevent duplicates
+            // Search for existing file
             const res = await drive.files.list({
               q: "name = '" + fileName + "' and '" + folderId + "' in parents and trashed = false",
               fields: 'files(id)',
+              supportsAllDrives: true,
+              includeItemsFromAllDrives: true
             });
 
-            const fileMetadata = {
-              name: fileName,
-              parents: [folderId],
-            };
-            
             const media = {
               mimeType: 'application/pdf',
               body: fs.createReadStream(fileName),
@@ -61,21 +62,25 @@ jobs:
             const existingFiles = res.data.files;
             
             if (existingFiles && existingFiles.length > 0) {
-              // 2. If it exists, update it
               const fileId = existingFiles[0].id;
               await drive.files.update({
                 fileId: fileId,
                 media: media,
+                supportsAllDrives: true
               });
-              console.log('✅ Successfully updated ' + fileName + ' (ID: ' + fileId + ')');
+              console.log('✅ Updated existing file: ' + fileId);
             } else {
-              // 3. If it doesn't exist, create it
+              const fileMetadata = {
+                name: fileName,
+                parents: [folderId],
+              };
               const newFile = await drive.files.create({
                 resource: fileMetadata,
                 media: media,
                 fields: 'id',
+                supportsAllDrives: true
               });
-              console.log('✅ Successfully created ' + fileName + ' (ID: ' + newFile.data.id + ')');
+              console.log('✅ Created new file: ' + newFile.data.id);
             }
           }
 
