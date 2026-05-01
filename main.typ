@@ -19,10 +19,9 @@
 // ── Header ────────────────────────────────────────────────────────────────────
 
 #align(center)[
-  #text(size: 22pt, weight: "bold")[Amir Abdulkareem]
-  #v(2pt)
-  #text(size: 10pt)[Front-end Developer | Full Stack Experience]
-  #v(5pt)
+  = Amir Abdulkarim
+   Full Stack Experience | Front-end Developer
+
   #icon("icons/phone.svg") #link("tel:+9647777665783")[+964 777 766 5783] |
   #icon("icons/phone.svg") #link("tel:+9647726819007")[+964 772 681 9007] |
   #icon("icons/gmail.svg") #link("mailto:amoree.allami@gmail.com")[amoree.allami\@gmail.com] \
@@ -30,8 +29,6 @@
   #icon("icons/linkedin.svg") #link("https://www.linkedin.com/in/amer-abdulkareem/")[LinkedIn] |
   #icon("icons/globe.svg") #link("https://cv-amoree.vercel.app")[Portfolio]
 ]
-
-
 
 
 // ── Summary ───────────────────────────────────────────────────────────────────

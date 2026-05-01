@@ -1,0 +1,26 @@
+name: Sync PDF to Google Drive
+on:
+  push:
+    branches:
+      - main # Runs every time you push to main
+
+jobs:
+  convert_and_upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        run: sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended
+
+      - name: Convert Markdown to PDF
+        run: pandoc README.md -o document.pdf
+
+      - name: Upload to Google Drive
+        uses: Jambo-Dev/google-drive-upload-action@v1.1.0
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          filename: document.pdf
+          folderId: ${{ secrets.FOLDER_ID }}
+          overwrite: 'true'
