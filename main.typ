@@ -20,7 +20,7 @@
 
 #align(center)[
   = Amir Abdulkarim
-   Full Stack Experience | Front-end Developer
+  Full Stack Experience | Front-end Developer
 
   #icon("icons/phone.svg") #link("tel:+9647777665783")[+964 777 766 5783] |
   #icon("icons/phone.svg") #link("tel:+9647726819007")[+964 772 681 9007] |
@@ -35,7 +35,7 @@
 
 == Summary
 
-Front-End Developer with 2 years of experience building responsive, user-centric web applications. Skilled in creating modern, interactive interfaces. Experienced in developing large-scale dashboards and management systems handling millions of records. Strong focus on clean code, performance optimization, and delivering seamless user experiences.
+Full Stack Developer with 2 years of experience building end-to-end web applications, from responsive front-end interfaces to scalable back-end systems. Experienced in delivering large-scale platforms managing millions of records, including government dashboards, SaaS applications, and real-time systems. Strong track record of integrating RESTful APIs, implementing role-based access control, and optimizing performance across the full stack.
 
 // ── Experience ────────────────────────────────────────────────────────────────
 
@@ -79,8 +79,8 @@ Front-End Developer with 2 years of experience building responsive, user-centric
   *Languages:* HTML, CSS, JavaScript, TypeScript \
   *Front-end:* React.js, Vue.js, Next.js, Redux Toolkit, Framer Motion \
   *UI Libraries:* Tailwind CSS, Shadcn, Mantine UI, Hero UI \
-  *Back-end:* Node.js, Nest,js, Express, RESTful API, PrismaORM, Sequelize \
-  *Databases:* Postgress, MySQL, MongoDB \
+  *Back-end:* Node.js, Nest.js, Express, RESTful API, PrismaORM, Sequelize \
+  *Databases:* PostgreSQL, MySQL, MongoDB \
   *Tools:* Git/GitHub, Postman, Swagger, Apidog \ 
   *Other:* Performance Optimization, Problem-Solving
 ]
@@ -90,11 +90,15 @@ Front-End Developer with 2 years of experience building responsive, user-centric
 == Projects
 
 *Technical Support System* — Real-time Customer Communication Management System
-- Built and sold as a SaaS real-time support chat application integrated into multiple production platforms
-- Integrated with many client support applications as an embedded live chat solution
-- Implemented real-time live chat for instant, bidirectional communication between users and agents
-- Developed multi-role system (Admin, Supervisor, Agent, Client) with fine-grained permissions and access control
-- Managed full ticket and conversation lifecycle with role-based visibility and escalation workflows
+- Built and sold as a SaaS embedded live chat solution integrated into multiple production platforms
+- Implemented WebSocket-powered real-time chat for instant, bidirectional communication between users and live agents
+- Developed bot-based self-service with interactive decision tree navigation for common issues
+- Built full ticket management system for creating, viewing, and managing support tickets
+- Added multi-language support: Arabic, English, Central Kurdish (Sorani), and Northern Kurdish (Kurmanji)
+- Implemented customizable UI with configurable colors to match each client's branding
+- Built with Material Design 3 components for a modern, responsive interface
+- Designed stateless architecture where the host app maintains all persistent data
+- Secured with API key and token-based authentication
 
 #line(length: 100%, stroke: 0.3pt + luma(200))
 
