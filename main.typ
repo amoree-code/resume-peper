@@ -19,12 +19,11 @@
 // ── Header ────────────────────────────────────────────────────────────────────
 
 #align(center)[
-  = Amir Abdulkarim
-  Full Stack Experience | Front-end Developer
+  = Amir Abdulkarim Jabbar
+  Front-end Specialized | Full Stack Developer
 
   #icon("icons/phone.svg") #link("tel:+9647777665783")[+964 777 766 5783] |
-  #icon("icons/phone.svg") #link("tel:+9647726819007")[+964 772 681 9007] |
-  #icon("icons/gmail.svg") #link("mailto:amoree.allami@gmail.com")[amoree.allami\@gmail.com] \
+  #icon("icons/gmail.svg") #link("mailto:amir.abdulkarim.jabbar@gmail.com")[amir.abdulkarim.jabbar\@gmail.com] \
   #icon("icons/github.svg") #link("https://github.com/amoree-code")[GitHub] |
   #icon("icons/linkedin.svg") #link("https://www.linkedin.com/in/amer-abdulkareem/")[LinkedIn] |
   #icon("icons/globe.svg") #link("https://cv-amoree.vercel.app")[Portfolio]
@@ -35,41 +34,39 @@
 
 == Summary
 
-Full Stack Developer building end-to-end web applications from responsive front-end interfaces to scalable back-end systems. Proven expertise delivering large-scale platforms managing millions of records, including government dashboards, SaaS applications, and real-time systems. Track record of shipping high-performance solutions that drive business impact across consumer and enterprise markets.
+Front-end-focused Full Stack Developer with 3 years of experience turning ideas and designs into clean, fast, and dependable web products. I enjoy crafting interfaces that feel effortless to use, and I'm just as comfortable working across the full stack to bring a product to life from start to finish. I've helped ship large-scale government dashboards, SaaS products, and real-time systems used by hundreds of thousands of people. I care deeply about quality, performance, and building things that are easy for a team to maintain and grow.
 
 // ── Experience ────────────────────────────────────────────────────────────────
 
 == Experience
 
-#table(
-  columns: (auto, 1fr),
-  stroke: none,
-  inset: (x: 8pt, y: 6pt),
+#let job(company, role, dates) = {
+  grid(
+    columns: (1fr, auto),
+    align(left)[*#company* — *#role*],
+    align(right)[#emph(dates)],
+  )
+}
 
-  table.cell(stroke: (right: 1pt))[_Sep 2025 -_ \ _Present_],
-  [* StarSphere* \ *Front-end Developer*
-    - Build and maintain responsive web applications using React and Next.js
-    - Collaborate with designers to implement pixel-perfect UI components
-    - Improve application load time by 40% through code optimization and lazy loading
-    - Ensure cross-browser compatibility and mobile-first responsive design
-  ],
+#job("StarSphere", "Front-end Developer", "Sep 2025 – Present")
+- Build and maintain responsive web applications using React and Next.js
+- Collaborate with designers to implement pixel-perfect UI components
+- Improved application load time by 40% through code optimization and lazy loading
+- Ensure cross-browser compatibility and mobile-first responsive design
 
-  table.cell(stroke: (right: 1pt))[_Jul 2025 -_ \ _Aug 2025_],
-  [* Lightring Technology* \ *Front-end Developer*
-    - Enhanced reusable React components for internal dashboard systems
-    - Incorporated RESTful APIs and managed application state with Redux Toolkit
-    - Collaborated with backend team to ensure seamless data flow
-    - Delivered 5+ projects on tight deadlines while maintaining code quality
-  ],
+#v(4pt)
+#job("Lightring Technology", "Front-end Developer", "Jul 2025 – Aug 2025")
+- Developed reusable React components for internal dashboard systems
+- Integrated RESTful APIs and managed application state with Redux Toolkit
+- Collaborated with the backend team to ensure seamless data flow
+- Delivered 5+ projects on tight deadlines while maintaining code quality
 
-  table.cell(stroke: (right: 1pt))[_Feb 2025 -_ \ _Jul 2025_],
-  [* The Golden Castle* \ *Front-end Developer*
-    - Established interactive user interfaces using React and Tailwind CSS
-    - Executed responsive designs that increased mobile user engagement by 25%
-    - Conducted code reviews and mentored 3 junior developers
-    - Optimized website performance and improved SEO scores by 35%
-  ],
-)
+#v(4pt)
+#job("The Golden Castle", "Front-end Developer", "Feb 2025 – Jul 2025")
+- Developed interactive user interfaces using React and Tailwind CSS
+- Built responsive, mobile-first layouts across all device sizes
+- Conducted code reviews and mentored 3 junior developers
+- Improved website performance and SEO through optimization and best practices
 
 // ── Skills ────────────────────────────────────────────────────────────────────
 
@@ -89,56 +86,71 @@ Full Stack Developer building end-to-end web applications from responsive front-
 
 == Projects
 
-*Technical Support System* — Real-time Customer Communication Management System
-- Built and sold as a SaaS embedded live chat solution integrated into 10+ production platforms
-- Executed WebSocket-powered real-time chat for instant, bidirectional communication between users and live agents
-- Enhanced bot-based self-service with interactive decision tree navigation, reducing support requests by 30%
-- Built full ticket management system for creating, viewing, and managing 500+ daily support tickets
-- Supported 4 languages: Arabic, English, Central Kurdish (Sorani), and Northern Kurdish (Kurmanji)
-- Applied customizable UI with configurable colors to match each client's branding requirements
-- Crafted with Material Design 3 components for a modern, responsive interface
-- Architected stateless design where the host app maintains all persistent data
-- Secured with API key and token-based authentication
+// Each project stays together on one page (never splits across the page break).
+// The divider is attached to the top of each project so no dangling line is left behind.
+#let proj(body, rule: true) = block(breakable: false, width: 100%, {
+  if rule {
+    v(8pt)
+    line(length: 100%, stroke: 0.3pt + luma(200))
+    v(8pt)
+  }
+  body
+})
 
-#line(length: 100%, stroke: 0.3pt + luma(200))
+#proj(rule: false)[
+  *Technical Support System* — Real-time Customer Communication Platform
+  - Built and sold as an embedded SaaS live-chat solution, integrated into 10+ production platforms
+  - Implemented WebSocket-powered real-time chat for instant, two-way communication between users and live agents
+  - Added bot-based self-service with interactive decision-tree navigation to deflect repetitive support requests
+  - Built a full ticketing system for creating, viewing, and managing hundreds of daily support tickets
+  - Localized the interface in 4 languages: Arabic, English, Central Kurdish (Sorani), and Northern Kurdish (Kurmanji)
+  - Made the UI fully themeable with configurable colors to match each client's branding
+  - Built with Material Design 3 components for a modern, responsive interface
+  - Designed a stateless architecture where the host application owns all persistent data
+  - Secured access with API-key and token-based authentication
+]
 
-*Dashboard Entrepreneurship* — Ministry of Higher Education
-- Built control panel managing 1.5 million+ student and project records with sub-100ms query performance
-- Executed role-based permissions and access control system supporting 50+ user roles
-- Enhanced project creation and review management workflow, reducing approval time by 40%
-- Established messaging system for communication between students and authorities, handling 10K+ daily messages
+#proj[
+  *Dashboard Entrepreneurship* — Ministry of Higher Education
+  - Built a control panel managing 1.5 million+ student and project records
+  - Implemented role-based access control supporting 50+ distinct user roles
+  - Streamlined the project creation and review workflow, cutting approval turnaround
+  - Developed a messaging system for students and authorities handling thousands of messages daily
+]
 
-#line(length: 100%, stroke: 0.3pt + luma(200))
+#proj[
+  *Dashboard Riyada* — Entrepreneurship Directorate
+  - Built an administrative control panel managing data for 500,000+ users
+  - Implemented dynamic roles and permissions with fine-grained access control across 15+ permission levels
+  - Optimized data-handling tools for noticeably faster queries at scale
+  - Crafted a modern UI/UX that stays smooth and responsive under heavy load
+]
 
-*Dashboard Riyada* — Entrepreneurship Directorate
-- Built administrative control panel managing data for 500,000+ users with 99.9% uptime
-- Executed dynamic user roles and permissions with complete access control across 15+ permission levels
-- Enhanced flexible management tools for efficient data handling, improving query speed by 50%
-- Crafted modern UI/UX ensuring smooth performance at scale with zero performance degradation
+#proj[
+  *Dashboard Archive Documents* — Baghdad Chamber of Commerce
+  - Built a document archive system managing 85,000+ importer and exporter records with fast search
+  - Designed a dual-panel system with separate manager and employee interfaces to speed up data entry
+  - Implemented role-based permissions for secure document access across 8 permission tiers
+  - Delivered a clean, responsive interface supporting thousands of concurrent users
+]
 
-#line(length: 100%, stroke: 0.3pt + luma(200))
+#proj[
+  *Hospital System*
+  - Built a hospital management system for room scanning and inventory tracking across 200+ rooms
+  - Added real-time display of rooms, equipment, and item availability
+  - Implemented role-based access control for medical staff across 15+ departments
+  - Designed a responsive interface that improved inventory accuracy and day-to-day operations
+]
 
-*Dashboard Archive Documents* — Baghdad Chamber of Commerce
-- Built document archive system managing 85,000+ importer and exporter records with fast search capability
-- Enhanced dual-panel system with separate interfaces for managers and employees, reducing data entry time by 45%
-- Executed role-based permissions for secure document access across 8 permission tiers
-- Established user-friendly, responsive interface for efficient document management, supporting 2K+ concurrent users
+#proj[
+  *Electronic Voting Dashboard*
+  - Built an integrated control panel for electronic voting and reporting at the scale of tens of thousands of voters
+  - Built a vote-management system with real-time results tracking
+  - Implemented secure role-based permissions for administrators across 3 administrative levels
+  - Developed comprehensive reporting and analytics with 15+ customizable reports
+]
 
-#line(length: 100%, stroke: 0.3pt + luma(200))
-
-*Hospital System*
-- Built hospital management system for room scanning and inventory tracking across 200+ rooms
-- Enhanced real-time display of rooms, equipment, and item availability with under 500ms latency
-- Executed role-based access control for medical staff supporting 15+ departments
-- Established responsive interface for efficient hospital operations, improving inventory accuracy by 60%
-
-#line(length: 100%, stroke: 0.3pt + luma(200))
-
-*Electronic Voting Dashboard*
-- Built integrated control panel for electronic voting and reporting supporting 50K+ voters
-- Enhanced vote management system with real-time results tracking, processing votes in under 100ms
-- Executed secure role-based permissions for administrators across 3 administrative levels
-- Established comprehensive reporting and analytics features with 15+ customizable reports
+/* ── Hidden projects (kept, not shown) — remove the comment markers to re-enable ──
 
 #line(length: 100%, stroke: 0.3pt + luma(200))
 
@@ -160,3 +172,11 @@ Full Stack Developer building end-to-end web applications from responsive front-
 - Built landing page for import/export document archive system serving 85K+ users
 - Crafted interface for Baghdad Chamber of Commerce services with 5 key feature sections
 - Highlighted platform capabilities for importers and exporters, driving 40% adoption rate
+
+*/
+
+// ── Education ───────────────────────────────────────────────────────────────────
+
+== Education
+
+#job("High School Diploma", "Jerusalem School", "2026")
