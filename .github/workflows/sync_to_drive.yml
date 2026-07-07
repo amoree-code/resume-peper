@@ -20,13 +20,14 @@ jobs:
         run: typst compile main.typ resume.pdf
 
       # 3. Upload to Google Drive using Node.js (OAuth as user — service accounts
-      #    have no storage quota on personal Gmail, only Shared Drives support them)
+      #    have no storage quota on personal Gmail, only Shared Drives support them).
+      #    drive.file scope only sees files the app itself created, so this syncs
+      #    to a self-owned file in Drive root rather than a pre-existing folder.
       - name: Upload to Drive
         env:
           GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
           GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
           GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
-          FOLDER_ID: ${{ secrets.FOLDER_ID }}
         run: |
           npm install googleapis
           node - <<EOF
@@ -34,16 +35,7 @@ jobs:
           const fs = require('fs');
 
           async function syncResume() {
-            // This regex removes any invisible spaces or newlines that might break the ID
-            const folderId = process.env.FOLDER_ID ? process.env.FOLDER_ID.replace(/[^a-zA-Z0-9-_]/g, '') : '';
             const fileName = 'resume.pdf';
-
-            console.log('🔍 DEBUG: Starting Health Check...');
-            console.log('🔍 DEBUG: FOLDER_ID starts with: "' + folderId.substring(0, 5) + '..." and is ' + folderId.length + ' characters long.');
-
-            if (folderId.length < 15) {
-              throw new Error('FOLDER_ID looks way too short to be a real Google Drive ID.');
-            }
 
             const auth = new google.auth.OAuth2(
               process.env.GDRIVE_CLIENT_ID,
@@ -53,30 +45,10 @@ jobs:
 
             const drive = google.drive({ version: 'v3', auth });
 
-            // --- HEALTH CHECK: Can the Service Account see the folder? ---
-            try {
-              console.log('🔍 DEBUG: Testing access to the folder...');
-              await drive.files.get({
-                fileId: folderId,
-                fields: 'id, name',
-                supportsAllDrives: true
-              });
-              console.log('✅ HEALTH CHECK PASSED: can see the folder!');
-            } catch (e) {
-              console.error('\n❌ CRITICAL FAILURE: CANNOT see the folder.');
-              console.error('👉 REASON: The FOLDER_ID secret is incorrect, or the refresh token lacks access.');
-              console.error('Google API says:', e.message, '\n');
-              process.exit(1);
-            }
-            // -------------------------------------------------------------
-
-            // 1. Search for existing file
             console.log('🔍 DEBUG: Looking for existing resume.pdf...');
             const res = await drive.files.list({
-              q: "name = '" + fileName + "' and '" + folderId + "' in parents and trashed = false",
+              q: "name = '" + fileName + "' and trashed = false",
               fields: 'files(id)',
-              supportsAllDrives: true,
-              includeItemsFromAllDrives: true
             });
 
             const media = {
@@ -85,25 +57,16 @@ jobs:
             };
 
             const existingFiles = res.data.files;
-            
+
             if (existingFiles && existingFiles.length > 0) {
               const fileId = existingFiles[0].id;
-              await drive.files.update({
-                fileId: fileId,
-                media: media,
-                supportsAllDrives: true
-              });
+              await drive.files.update({ fileId, media });
               console.log('✅ Updated existing file: ' + fileId);
             } else {
-              const fileMetadata = {
-                name: fileName,
-                parents: [folderId],
-              };
               const newFile = await drive.files.create({
-                resource: fileMetadata,
-                media: media,
+                resource: { name: fileName },
+                media,
                 fields: 'id',
-                supportsAllDrives: true
               });
               console.log('✅ Created new file: ' + newFile.data.id);
             }
