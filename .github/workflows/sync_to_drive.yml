@@ -19,10 +19,13 @@ jobs:
       - name: Generate PDF
         run: typst compile main.typ resume.pdf
 
-      # 3. Upload to Google Drive using Node.js
-      - name: Upload to Drive (Diagnostic Mode)
+      # 3. Upload to Google Drive using Node.js (OAuth as user — service accounts
+      #    have no storage quota on personal Gmail, only Shared Drives support them)
+      - name: Upload to Drive
         env:
-          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
         run: |
           npm install googleapis
@@ -31,7 +34,6 @@ jobs:
           const fs = require('fs');
 
           async function syncResume() {
-            const credentials = JSON.parse(process.env.GDRIVE_CREDENTIALS);
             // This regex removes any invisible spaces or newlines that might break the ID
             const folderId = process.env.FOLDER_ID ? process.env.FOLDER_ID.replace(/[^a-zA-Z0-9-_]/g, '') : '';
             const fileName = 'resume.pdf';
@@ -43,10 +45,11 @@ jobs:
               throw new Error('FOLDER_ID looks way too short to be a real Google Drive ID.');
             }
 
-            const auth = new google.auth.GoogleAuth({
-              credentials,
-              scopes: ['https://www.googleapis.com/auth/drive'],
-            });
+            const auth = new google.auth.OAuth2(
+              process.env.GDRIVE_CLIENT_ID,
+              process.env.GDRIVE_CLIENT_SECRET
+            );
+            auth.setCredentials({ refresh_token: process.env.GDRIVE_REFRESH_TOKEN });
 
             const drive = google.drive({ version: 'v3', auth });
 
@@ -58,11 +61,10 @@ jobs:
                 fields: 'id, name',
                 supportsAllDrives: true
               });
-              console.log('✅ HEALTH CHECK PASSED: Service account can see the folder!');
+              console.log('✅ HEALTH CHECK PASSED: can see the folder!');
             } catch (e) {
-              console.error('\n❌ CRITICAL FAILURE: The Service Account CANNOT see the folder.');
-              console.error('👉 REASON 1: The FOLDER_ID secret is incorrect.');
-              console.error('👉 REASON 2: You forgot to share the folder with this email: ' + credentials.client_email);
+              console.error('\n❌ CRITICAL FAILURE: CANNOT see the folder.');
+              console.error('👉 REASON: The FOLDER_ID secret is incorrect, or the refresh token lacks access.');
               console.error('Google API says:', e.message, '\n');
               process.exit(1);
             }
