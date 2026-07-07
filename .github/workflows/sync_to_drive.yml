@@ -28,6 +28,7 @@ jobs:
           GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
           GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
           GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+          FOLDER_ID: ${{ secrets.FOLDER_ID }}
         run: |
           npm install googleapis
           node - <<EOF
@@ -63,8 +64,9 @@ jobs:
               await drive.files.update({ fileId, media });
               console.log('✅ Updated existing file: ' + fileId);
             } else {
+              const folderId = process.env.FOLDER_ID;
               const newFile = await drive.files.create({
-                resource: { name: fileName },
+                resource: folderId ? { name: fileName, parents: [folderId] } : { name: fileName },
                 media,
                 fields: 'id',
               });
