@@ -26,7 +26,7 @@
   #icon("icons/gmail.svg") #link("mailto:amir.abdulkarim.jabbar@gmail.com")[amir.abdulkarim.jabbar\@gmail.com] \
   #icon("icons/github.svg") #link("https://github.com/amoree-code")[GitHub] |
   #icon("icons/linkedin.svg") #link("https://www.linkedin.com/in/amer-abdulkareem/")[LinkedIn] |
-  #icon("icons/globe.svg") #link("https://cv-amoree.vercel.app")[Portfolio]
+  #icon("icons/globe.svg") #link("https://cv-amir.vercel.app")[Portfolio]
 ]
 
 
