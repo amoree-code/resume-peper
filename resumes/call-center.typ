@@ -25,6 +25,7 @@ Currently pursuing university studies
 - *Communication:* active listening, clear phone etiquette, patience with customers, conflict resolution
 - Teamwork and adaptability, fast learner, works well under pressure
 - *Computer skills:* MS Office (Word, Excel), fast typing, comfortable learning new software/CRM tools
+- *Technical background:* hands-on software development experience (web apps, React/Node.js), strong troubleshooting and quick grasp of new systems
 - Problem-solving and attention to detail
 - Time management, ability to handle repetitive tasks and multiple calls per shift
 
