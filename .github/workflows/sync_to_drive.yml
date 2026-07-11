@@ -11,18 +11,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Setup Typst to compile your .typ file
+      # 1. Setup Typst to compile your .typ files
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
 
-      # 2. Compile main.typ into resume.pdf
-      - name: Generate PDF
-        run: typst compile main.typ resume.pdf
+      # 2. Compile every resumes/*.typ variant into its own PDF
+      - name: Generate PDFs
+        run: |
+          mkdir -p resumes/out
+          for f in resumes/*.typ; do
+            name=$(basename "$f" .typ)
+            typst compile "$f" "resumes/out/resume-$name.pdf" --root .
+          done
 
-      # 3. Upload to Google Drive using Node.js (OAuth as user — service accounts
-      #    have no storage quota on personal Gmail, only Shared Drives support them).
-      #    drive.file scope only sees files the app itself created, so this syncs
-      #    to a self-owned file in Drive root rather than a pre-existing folder.
+      # 3. Upload each variant to Google Drive as its own file, updated in place
+      #    (OAuth as user — service accounts have no storage quota on personal
+      #    Gmail, only Shared Drives support them). drive.file scope only sees
+      #    files the app itself created, so this syncs to self-owned files in
+      #    Drive root rather than a pre-existing folder.
       - name: Upload to Drive
         env:
           GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
@@ -34,19 +40,12 @@ jobs:
           node - <<EOF
           const { google } = require('googleapis');
           const fs = require('fs');
+          const path = require('path');
 
-          async function syncResume() {
-            const fileName = 'resume.pdf';
+          async function syncFile(drive, folderId, filePath) {
+            const fileName = path.basename(filePath);
 
-            const auth = new google.auth.OAuth2(
-              process.env.GDRIVE_CLIENT_ID,
-              process.env.GDRIVE_CLIENT_SECRET
-            );
-            auth.setCredentials({ refresh_token: process.env.GDRIVE_REFRESH_TOKEN });
-
-            const drive = google.drive({ version: 'v3', auth });
-
-            console.log('🔍 DEBUG: Looking for existing resume.pdf...');
+            console.log('🔍 DEBUG: Looking for existing ' + fileName + '...');
             const res = await drive.files.list({
               q: "name = '" + fileName + "' and trashed = false",
               fields: 'files(id)',
@@ -54,7 +53,7 @@ jobs:
 
             const media = {
               mimeType: 'application/pdf',
-              body: fs.createReadStream(fileName),
+              body: fs.createReadStream(filePath),
             };
 
             const existingFiles = res.data.files;
@@ -62,19 +61,35 @@ jobs:
             if (existingFiles && existingFiles.length > 0) {
               const fileId = existingFiles[0].id;
               await drive.files.update({ fileId, media });
-              console.log('✅ Updated existing file: ' + fileId);
+              console.log('✅ Updated existing file: ' + fileName + ' (' + fileId + ')');
             } else {
-              const folderId = process.env.FOLDER_ID;
               const newFile = await drive.files.create({
                 resource: folderId ? { name: fileName, parents: [folderId] } : { name: fileName },
                 media,
                 fields: 'id',
               });
-              console.log('✅ Created new file: ' + newFile.data.id);
+              console.log('✅ Created new file: ' + fileName + ' (' + newFile.data.id + ')');
             }
           }
 
-          syncResume().catch(err => {
+          async function syncAll() {
+            const auth = new google.auth.OAuth2(
+              process.env.GDRIVE_CLIENT_ID,
+              process.env.GDRIVE_CLIENT_SECRET
+            );
+            auth.setCredentials({ refresh_token: process.env.GDRIVE_REFRESH_TOKEN });
+
+            const drive = google.drive({ version: 'v3', auth });
+            const folderId = process.env.FOLDER_ID;
+
+            const dir = 'resumes/out';
+            const files = fs.readdirSync(dir).filter(f => f.endsWith('.pdf'));
+            for (const f of files) {
+              await syncFile(drive, folderId, path.join(dir, f));
+            }
+          }
+
+          syncAll().catch(err => {
             console.error('❌ Error Detail:', err.message);
             process.exit(1);
           });
