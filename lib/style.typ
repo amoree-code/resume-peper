@@ -30,11 +30,11 @@
 
 // Each project stays together on one page (never splits across the page break).
 // The divider is attached to the top of each project so no dangling line is left behind.
-#let proj(body, rule: true) = block(breakable: false, width: 100%, {
+#let proj(body, rule: true) = block(breakable: true, width: 100%, {
   if rule {
-    v(8pt)
+    v(6pt)
     line(length: 100%, stroke: 0.3pt + luma(200))
-    v(8pt)
+    v(6pt)
   }
   body
 })

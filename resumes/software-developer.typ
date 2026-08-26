@@ -4,13 +4,13 @@
 
 #show: template
 
-#contact-header[Full Stack Developer | Front-end Specialized]
+#contact-header(name: "Ameer Abdulkareem Jabbar")[Full Stack Developer | Front-end Specialized]
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 == Summary
 
-Full Stack Developer with 3 years of experience building complete web products end-to-end, from database and API design through to the interfaces people use every day. Comfortable owning a feature across the whole stack — Node.js/Nest.js services, PostgreSQL/MySQL/MongoDB data layers, and React/Next.js front-ends. I've helped ship large-scale government dashboards, SaaS products, and real-time systems used by hundreds of thousands of people. I care deeply about quality, performance, and building things that are easy for a team to maintain and grow.
+I am a self-taught software developer with 3 years of professional experience. I started learning programming because I was curious about how software works, and over time it became something I wanted to build a career around. I enjoy solving problems, learning through experience, and turning ideas into practical products. I am always looking for ways to improve my understanding and become a better software engineer.
 
 // ── Experience ────────────────────────────────────────────────────────────────
 
@@ -57,10 +57,10 @@ Full Stack Developer with 3 years of experience building complete web products e
 #proj(rule: false)[
   *Technical Support System* — Real-time Customer Communication Platform
   - Built and sold as an embedded SaaS live-chat solution, integrated into 10+ production platforms
-  - Implemented WebSocket-powered real-time chat for instant, two-way communication between users and live agents
-  - Added bot-based self-service with interactive decision-tree navigation to deflect repetitive support requests
+  - Implemented WebSocket-powered real-time chat between users and live agents
+  - Added bot-based self-service with decision-tree navigation to deflect repetitive requests
   - Built a full ticketing system for creating, viewing, and managing hundreds of daily support tickets
-  - Localized the interface in 4 languages: Arabic, English, Central Kurdish (Sorani), and Northern Kurdish (Kurmanji)
+  - Localized the interface in Arabic, English, Sorani, and Kurmanji
   - Made the UI fully themeable with configurable colors to match each client's branding
   - Built with Material Design 3 components for a modern, responsive interface
   - Designed a stateless architecture where the host application owns all persistent data
@@ -101,7 +101,7 @@ Full Stack Developer with 3 years of experience building complete web products e
 
 #proj[
   *Electronic Voting Dashboard*
-  - Built an integrated control panel for electronic voting and reporting at the scale of tens of thousands of voters
+  - Built an integrated control panel for electronic voting and reporting at scale
   - Built a vote-management system with real-time results tracking
   - Implemented secure role-based permissions for administrators across 3 administrative levels
   - Developed comprehensive reporting and analytics with 15+ customizable reports
@@ -111,4 +111,10 @@ Full Stack Developer with 3 years of experience building complete web products e
 
 == Education
 
-#education()
+#education(track: "Media Technology Track")
+
+// ── Languages ───────────────────────────────────────────────────────────────────
+
+== Spoken Languages
+
+Arabic (Native), English (Fluent)
