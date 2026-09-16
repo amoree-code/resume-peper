@@ -4,44 +4,44 @@
 
 #show: template
 
-#contact-header(name: "Ameer Abdulkareem Jabbar")[Full Stack Developer | Front-end Specialized]
+#contact-header(name: "Ameer Abdulkareem Jabbar Lami")[Front-end-Focused Full Stack Developer]
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 == Summary
 
-I am a self-taught software developer with 3 years of professional experience. I started learning programming because I was curious about how software works, and over time it became something I wanted to build a career around. I enjoy solving problems, learning through experience, and turning ideas into practical products. I am always looking for ways to improve my understanding and become a better software engineer.
+Front-end-focused Full Stack Developer with 2+ years of experience turning product ideas and designs into reliable web applications. Worked on government dashboards, enterprise systems, and SaaS products supporting 1.5M+ records, 500K+ users, and integrations across 10+ production platforms. Comfortable working across the front end and back end, especially on real-time and multilingual RTL products.
 
 // ── Experience ────────────────────────────────────────────────────────────────
 
 == Experience
 
 #job("StarSphere", "Front-end Developer", "Sep 2025 – Present")
-- Build and maintain responsive web applications using React and Next.js
-- Collaborate with designers to implement pixel-perfect UI components
-- Improved application load time by 40% through code optimization and lazy loading
-- Ensure cross-browser compatibility and mobile-first responsive design
+- Build responsive web applications that work smoothly across desktop and mobile
+- Work closely with designers to turn their designs into reusable, pixel-accurate UI
+- Improved application load time by 40% by addressing slow code paths and using code splitting and lazy loading
+- Make sure features behave consistently across browsers and screen sizes
 
 #v(4pt)
-#job("Lightring Technology", "Front-end Developer", "Jul 2025 – Aug 2025")
-- Developed reusable React components for internal dashboard systems
-- Integrated RESTful APIs and managed application state with Redux Toolkit
-- Collaborated with the backend team to ensure seamless data flow
-- Delivered 5+ projects on tight deadlines while maintaining code quality
+#job("LightRing Technology", "Front-end Developer", "Jul 2025 – Aug 2025")
+- Built reusable React components for internal dashboard systems
+- Connected frontend screens to backend services and managed shared application state
+- Worked with backend developers to keep data flow predictable and reliable
+- Delivered 5+ projects under tight deadlines while keeping the code maintainable
 
 #v(4pt)
 #job("The Golden Castle", "Front-end Developer", "Feb 2025 – Jul 2025")
-- Developed interactive user interfaces using React and Tailwind CSS
-- Built responsive, mobile-first layouts across all device sizes
-- Conducted code reviews and mentored 3 junior developers
-- Improved website performance and SEO through optimization and best practices
+- Built interactive web interfaces with a focus on clear, practical user flows
+- Created responsive layouts that worked from mobile screens to large monitors
+- Reviewed code and mentored 3 junior developers
+- Improved website performance and SEO by cleaning up frontend code and page structure
 
 // ── Skills ────────────────────────────────────────────────────────────────────
 
 == Skills
 
 #columns(1, gutter: 16pt)[
-  *Back-end:* Node.js, Nest.js, Express, RESTful API, PrismaORM, Sequelize \
+  *Back-end:* Node.js, NestJS, Express, RESTful APIs, Prisma ORM, Sequelize \
   *Databases:* PostgreSQL, MySQL, MongoDB \
   *Languages:* HTML, CSS, JavaScript, TypeScript \
   *Front-end:* React.js, Vue.js, Next.js, Redux Toolkit, Framer Motion \
@@ -81,6 +81,7 @@ I am a self-taught software developer with 3 years of professional experience. I
   - Implemented dynamic roles and permissions with fine-grained access control across 15+ permission levels
   - Optimized data-handling tools for noticeably faster queries at scale
   - Crafted a modern UI/UX that stays smooth and responsive under heavy load
+  - Built the platform landing page with a 95+ Lighthouse score and increased organic traffic by 120%
 ]
 
 #proj[
@@ -89,6 +90,7 @@ I am a self-taught software developer with 3 years of professional experience. I
   - Designed a dual-panel system with separate manager and employee interfaces to speed up data entry
   - Implemented role-based permissions for secure document access across 8 permission tiers
   - Delivered a clean, responsive interface supporting thousands of concurrent users
+  - Built the platform landing page, contributing to 40% adoption
 ]
 
 #proj[
@@ -99,13 +101,6 @@ I am a self-taught software developer with 3 years of professional experience. I
   - Designed a responsive interface that improved inventory accuracy and day-to-day operations
 ]
 
-#proj[
-  *Electronic Voting Dashboard*
-  - Built an integrated control panel for electronic voting and reporting at scale
-  - Built a vote-management system with real-time results tracking
-  - Implemented secure role-based permissions for administrators across 3 administrative levels
-  - Developed comprehensive reporting and analytics with 15+ customizable reports
-]
 
 // ── Education ───────────────────────────────────────────────────────────────────
 
@@ -117,4 +112,4 @@ I am a self-taught software developer with 3 years of professional experience. I
 
 == Spoken Languages
 
-Arabic (Native), English (Fluent)
+Arabic (Native), English (Working Proficiency, B1)
