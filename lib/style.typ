@@ -4,19 +4,20 @@
 // Usage: #import "/lib/style.typ": template
 //        #show: template
 #let template(body) = {
-  set text(font: "Inter", size: 10pt)
+  set text(font: "Georgia", size: 10pt, weight: "regular")
   set par(justify: true)
   set page(margin: (x: 1.5cm, y: 1.2cm))
 
   show heading.where(level: 2): it => {
-    v(10pt)
+    v(6pt)
     grid(
-      columns: (auto, 1fr),
+      columns: (1fr, auto, 1fr),
       column-gutter: 8pt,
-      align(horizon)[#text(size: 10.5pt, weight: "bold")[#upper(it.body)]],
-      align(horizon)[#line(length: 100%, stroke: 0.6pt)],
+      align(horizon)[#line(length: 100%, stroke: 0.4pt + luma(190))],
+      align(horizon)[#text(size: 10.5pt, weight: "regular")[#upper(it.body)]],
+      align(horizon)[#line(length: 100%, stroke: 0.4pt + luma(190))],
     )
-    v(5pt)
+    v(3pt)
   }
 
   body
@@ -30,11 +31,11 @@
 
 // Each project stays together on one page (never splits across the page break).
 // The divider is attached to the top of each project so no dangling line is left behind.
-#let proj(body, rule: true) = block(breakable: true, width: 100%, {
+#let proj(body, rule: true) = block(breakable: false, width: 100%, {
   if rule {
-    v(6pt)
+    v(4pt)
     line(length: 100%, stroke: 0.3pt + luma(200))
-    v(6pt)
+    v(4pt)
   }
   body
 })
