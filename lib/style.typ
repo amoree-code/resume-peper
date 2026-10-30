@@ -1,5 +1,8 @@
 #let icon(path, size: 1em) = box(baseline: 0.1em, image(path, height: size))
 
+// Clickable external-link icon placed after a project title.
+#let site(url) = link(url)[#icon("/icons/external-link.svg", size: 0.85em)]
+
 // Page setup + section heading style, shared by every resume variant.
 // Usage: #import "/lib/style.typ": template
 //        #show: template
